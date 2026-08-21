@@ -39,7 +39,7 @@ Open `people/index.html`, find the block with your name, and edit the three line
   <p class="role">PhD Fellow</p>
   <p class="line">One or two sentences on what you actually work on.</p>
   <div class="links">
-    <a href="https://example.org">Site</a>
+    <a href="https://example.org">Personal Website</a>
   </div>
 </div>
 ```
