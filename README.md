@@ -138,9 +138,9 @@ Say it once, in prose, and let a quiet marker carry the rest. An earlier draft a
 
 `assets/img/mark.svg` is the mark. It carries no colour: it is applied as a CSS mask over the current text colour, so it follows the theme instead of needing a light copy and a dark copy that drift apart.
 
-`assets/img/favicon-v2.svg` is the only coloured version, because a browser tab cannot inherit a colour.
+`assets/img/favicon-v3.ico` (black on white) and `favicon-v3-dark.ico` (white on black) are the tab icons. A tab cannot inherit a colour, so `assets/js/theme.js` swaps between the two to match the page theme. Both are plain 32&times;32 `.ico` files: the earlier coloured SVG rendered muddy at tab size and lost its dark piece against a dark tab bar.
 
-**If you change the favicon, change its filename too.** Browsers cache favicons harder than anything else and will keep showing the old one through a hard refresh. Bump the number and update the three `<link>` lines in every page.
+**If you change the favicon, change its filename too.** Browsers cache favicons harder than anything else and will keep showing the old one through a hard refresh. Bump the number in both files, in the `<link>` line of every page, and in `theme.js`.
 
 ---
 
