@@ -23,7 +23,8 @@
     btn.setAttribute('title', label);
     btn.setAttribute('aria-label', label);
     if (icon) {
-      icon.href = '/assets/img/favicon-v3' + (other() === 'light' ? '-dark' : '') + '.ico';
+      icon.href = '/assets/img/favicon-v3' +
+        (root.getAttribute('data-theme') === 'dark' ? '-dark' : '') + '.ico';
     }
   }
 
