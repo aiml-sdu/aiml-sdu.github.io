@@ -3,7 +3,7 @@
    The stored choice, or the system preference when there is none, is
    applied by a short inline script in <head>, so the page never paints in
    the wrong theme and the button never shows the wrong glyph. This file
-   only handles the click. */
+   handles the click, and keeps the favicon on the same theme as the page. */
 
 (function () {
   var btn = document.querySelector('[data-theme-toggle]');
@@ -11,6 +11,7 @@
 
   var KEY = 'aiml-theme';
   var root = document.documentElement;
+  var icon = document.querySelector('[data-favicon]');
 
   function other() {
     return root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
@@ -21,6 +22,10 @@
     var label = 'Switch to ' + other() + ' theme';
     btn.setAttribute('title', label);
     btn.setAttribute('aria-label', label);
+    if (icon) {
+      icon.href = '/assets/img/favicon-v3' +
+        (root.getAttribute('data-theme') === 'dark' ? '-dark' : '') + '.ico';
+    }
   }
 
   btn.addEventListener('click', function () {

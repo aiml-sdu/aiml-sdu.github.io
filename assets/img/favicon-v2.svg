@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <!-- The same cut, carrying the colour the mask cannot: the two outer pieces
-       at the poles of the diverging palette, the cut face neutral between them. -->
-  <polygon points="11,11 45,11 11,45" fill="#215079"/>
-  <polygon points="56,22 86,22 22,86 22,56" fill="#101316"/>
-  <polygon points="97,33 117,33 117,117 33,117 33,97" fill="#8f3823"/>
-</svg>
