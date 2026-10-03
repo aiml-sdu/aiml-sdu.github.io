@@ -182,7 +182,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .nav {
   margin-left: auto;
   display: flex;
-  /* Four items at 12px mono need about 278px. It wrapped at six and could
+  /* Five items at 12px mono need about 330px. It wrapped at six and could
      still wrap on a narrow phone, so the wrap stays. */
   flex-wrap: wrap;
   gap: 24px;
@@ -238,8 +238,16 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .masthead .shell { padding-bottom: 14px; }
   /* order pulls the nav below, so the toggle rides on the mark's line instead
      of taking a row of its own under a wrapped nav. */
-  .nav { order: 1; margin-left: 0; width: 100%; gap: 12px 20px; margin-top: 14px; }
+  /* Five items take about 270px of text. They have to share one row on a
+     phone, or the masthead grows a row and --masthead above is wrong, so the
+     gap is a minimum and the row is spread across the width instead. */
+  .nav { order: 1; margin-left: 0; width: 100%; gap: 12px 10px; margin-top: 14px; justify-content: space-between; }
   .theme { margin-left: auto; }
+}
+
+/* Below about 375px the row only fits with tighter tracking. */
+@media (max-width: 374px) {
+  .nav { letter-spacing: 0.02em; }
 }
 
 /* ---------- hero ---------- */
@@ -470,6 +478,54 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   vertical-align: 1.5px;
 }
 
+
+/* ---------- news ---------- */
+
+/* Same rail as a citation: the date where the year sits, and a kind label
+   under it in the shape of .tag. The label is the whole of the marking; no
+   emoji, no colour per kind, because the sentence says what happened. */
+.news { border-top: 1px solid var(--rule-2); }
+
+.news-item {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--rule-2);
+  display: grid;
+  gap: 6px 28px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 720px) {
+  .news-item { grid-template-columns: 96px minmax(0, 1fr); }
+}
+
+.news-date {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-3);
+  padding-top: 3px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+}
+
+@media (min-width: 720px) {
+  .news-date { flex-direction: column; align-items: flex-start; }
+}
+
+.news-date .tag { margin-left: 0; }
+
+.news-text {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink);
+  max-width: 64ch;
+}
+
+.news-text a { border-bottom: 1px solid var(--rule); }
+.news-text a:hover { text-decoration: none; border-bottom-color: var(--cool); }
 
 /* ---------- people ---------- */
 

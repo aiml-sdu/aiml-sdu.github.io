@@ -19,6 +19,7 @@ Everything on the site is text in an HTML file. Find the words you want to chang
 | The headline and the four research lines | `index.html` |
 | The research statement, and any of the four studies | `research/index.html` |
 | The publication list | `publications/index.html` |
+| News | `news/index.html`, and the latest four on `index.html` |
 | A person or a role | `people/index.html` |
 | Positions, supervision, contact | `join/index.html` |
 
@@ -45,6 +46,24 @@ Open `people/index.html`, find the block with your name, and edit the three line
 ```
 
 Leave out any line you do not want. A person with no photograph gets no image block at all, which is deliberate: an empty grey box looks worse than no box.
+
+### Add a news item
+
+Open `news/index.html`, copy the nearest item into the right year, newest first. A new year gets a new `<section class="band">` above the last one.
+
+```html
+<div class="news-item">
+  <div class="news-date">Oct<span class="tag">paper</span></div>
+  <p class="news-text"><a href="CANONICAL RECORD">Title exactly as the record prints it</a> accepted at Venue 2026.</p>
+</div>
+```
+
+Then copy the same item to the top of the news section on `index.html`, write the year after the month there (`Oct 2026`), and drop the bottom one so the homepage keeps four.
+
+- **The kind label is one word**: `paper`, `talk`, `joined`, `visit`, `grant`, `project`, `event`. It is the only marker. No emoji: the page is set in three typefaces and nothing else, and the sentence already says what happened.
+- **People by full name, linked to their card** (`/people/#surname`), the same way a citation does. A name with no card is plain text.
+- **A paper links to the same record its publications entry links to.** When one changes, change both. A paper with no record yet is announced without a link rather than with a placeholder.
+- **Say what happened, once.** "Accepted at", "published in", "joined the group as". No adjectives about it.
 
 ### Add a photograph
 
@@ -198,14 +217,15 @@ If something on the live site is wrong and needs to be gone right now, an admin 
 | `/` | `index.html` |
 | `/research/` | `research/index.html` |
 | `/publications/` | `publications/index.html` |
+| `/news/` | `news/index.html` |
 | `/people/` | `people/index.html` |
 | `/join/` | `join/index.html` |
 
-Five pages and a 404. There is no `/work/` and no `/news/`: the four studies are sections of `/research/`, and news was four items, every one of which restated something already on another page.
+Six pages and a 404. There is no `/work/`: the four studies are sections of `/research/`. `/news/` was once removed, when it held four items that each restated another page; it came back once there was a record of papers, people and projects worth keeping in one dated place.
 
 The only HTML files at the root are `index.html` and `404.html`. Every other page lives in its own directory.
 
-`work/index.html`, `work/*/index.html` and `news/index.html` are the one exception. They are one-line stubs that meta-refresh to where their content went, and they are kept where the old flat `*.html` stubs were not, because these were real pages linked from the nav on every page of the published site. They are the addresses a search engine actually holds, and GitHub Pages cannot rewrite server-side. Anything arriving on any other old address gets `404.html`, which lists every page in the site's own design.
+`work/index.html` and `work/*/index.html` are the one exception. They are one-line stubs that meta-refresh to where their content went, and they are kept where the old flat `*.html` stubs were not, because these were real pages linked from the nav on every page of the published site. They are the addresses a search engine actually holds, and GitHub Pages cannot rewrite server-side. Anything arriving on any other old address gets `404.html`, which lists every page in the site's own design.
 
 The check verifies that each stub's refresh target and its fragment exist, so a stub pointing somewhere wrong fails the build. A stub that is deleted fails nothing — it just quietly kills the old URL, which is the trade to weigh before removing one.
 
