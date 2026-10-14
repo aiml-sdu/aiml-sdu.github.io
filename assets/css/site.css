@@ -1,88 +1,62 @@
 /* ============================================================
-   Applied and Interpretable Machine Learning Group
+   Applied and Interpretable Machine Learning
    Centre for Industrial Software, University of Southern Denmark
 
-   Design notes
-   - Palette is the diverging colormap every attribution figure
-     uses: a neutral paper midpoint, a cool pole, a warm pole.
-   - Structure is an annotation gutter. Content sits to the right
-     of a margin that carries the metadata, the way a read model
-     carries its notes.
-   - One superfamily for structure (IBM Plex), one reading serif
-     for prose (Newsreader). Nothing else.
+   Two typefaces: Newsreader for reading, IBM Plex Mono for the
+   utility layer (navigation, labels, dates). Warm paper, warm ink,
+   no accent colour. One centred reading column.
    ============================================================ */
 
-/* Light is the default and it is white. Every text colour below clears
-   WCAG AA against its background, including the small mono utility
-   layer, which is where a palette like this usually fails. Measured
-   ratios are in the comments. */
+/* Contrast against --paper (WCAG AA needs 4.5:1 for body text):
+   light ink 13.3, ink-2 6.9, ink-3 4.9; dark ink 14.4, ink-2 8.3, ink-3 5.8. */
 :root {
-  --paper:    #ffffff;
-  --raised:   #f6f6f4;
-  --ink:      #101316;  /* 18.6:1 */
-  --ink-2:    #4a525a;  /*  7.9:1 */
-  --ink-3:    #6a727a;  /*  4.9:1 */
-  --rule:     #d8d8d4;
-  --rule-2:   #e7e7e3;
-  --cool:     #215079;  /*  8.4:1 */
-  --warm:     #8f3823;  /*  7.6:1 */
+  --paper:  #f7f6f2;
+  --raised: #efede7;
+  --ink:    #2b2a27;
+  --ink-2:  #57554f;
+  --ink-3:  #6e6b64;
+  --rule:   #dcd9d1;
 
-  --sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --serif: "Newsreader", Georgia, "Times New Roman", serif;
   --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  --maxw: 1140px;
-  --gutter: 156px;
-  --gap: 40px;
-
-  /* Height of the sticky masthead. Every study URL and every citation author
-     link is a fragment, so anchored targets are offset by this; if the two
-     drift apart, anchors land underneath the header. Redeclared at each
-     breakpoint where the masthead changes rows, immediately below. */
-  --masthead: 66px;
+  --frame: 1290px;   /* header and footer */
+  --measure: 760px;  /* reading column */
+  --edge: 28px;
+  --rail: 112px;     /* date, year and key column */
 }
 
-/* System preference, unless the reader has explicitly chosen light. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper:  #101214;
-    --raised: #171a1c;
-    --ink:    #eceeec;  /* 16.1:1 */
-    --ink-2:  #a8b0b7;  /*  8.5:1 */
-    --ink-3:  #8a9299;  /*  6.0:1 */
-    --rule:   #2b3033;
-    --rule-2: #1e2225;
-    --cool:   #8ab8de;  /*  8.9:1 */
-    --warm:   #e0937a;  /*  7.7:1 */
+    --paper:  #1c1b19;
+    --raised: #252420;
+    --ink:    #ecebe6;
+    --ink-2:  #b8b4ac;
+    --ink-3:  #9a968e;
+    --rule:   #3a3833;
   }
 }
 
-/* Explicit choice always wins. Must follow the media query. */
+/* An explicit choice wins. Must follow the media query. */
 :root[data-theme="dark"] {
-  --paper:  #101214;
-  --raised: #171a1c;
-  --ink:    #eceeec;
-  --ink-2:  #a8b0b7;
-  --ink-3:  #8a9299;
-  --rule:   #2b3033;
-  --rule-2: #1e2225;
-  --cool:   #8ab8de;
-  --warm:   #e0937a;
+  --paper:  #1c1b19;
+  --raised: #252420;
+  --ink:    #ecebe6;
+  --ink-2:  #b8b4ac;
+  --ink-3:  #9a968e;
+  --rule:   #3a3833;
 }
 
 * { box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
+html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--sans);
-  font-size: 17px;
+  font-family: var(--serif);
+  font-size: 18px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -90,13 +64,16 @@ body {
 
 img { max-width: 100%; display: block; }
 
-a { color: var(--cool); text-decoration: none; }
-a:hover { text-decoration: underline; text-underline-offset: 3px; }
-
-:focus-visible {
-  outline: 2px solid var(--cool);
-  outline-offset: 3px;
+a {
+  color: inherit;
+  text-decoration: underline dotted;
+  text-decoration-color: var(--ink-3);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
+a:hover { text-decoration-style: solid; text-decoration-color: currentColor; }
+
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
 .skip {
   position: absolute;
@@ -111,489 +88,475 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 .skip:focus { left: 0; }
 
-/* ---------- shared shell ---------- */
+/* ---------- frame ---------- */
 
 .shell {
-  max-width: var(--maxw);
+  max-width: calc(var(--measure) + 2 * var(--edge));
   margin: 0 auto;
-  padding: 0 28px;
+  padding: 0 var(--edge);
+}
+
+.masthead .shell,
+.footer .shell { max-width: var(--frame); }
+
+@media (min-width: 900px) {
+  :root { --edge: 48px; }
 }
 
 /* ---------- masthead ---------- */
 
-.masthead {
-  border-bottom: 1px solid var(--rule);
-  background: var(--paper);
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-
 .masthead .shell {
   display: flex;
   align-items: center;
-  gap: 28px;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  gap: 18px 24px;
   flex-wrap: wrap;
+  padding-top: 36px;
+  padding-bottom: 20px;
 }
 
-/* The mark spells the two adjectives out. The acronym lives in the URL
-   and the email, not here: "AIML" on its own reads as artificial
-   intelligence and machine learning, which loses both of the words the
-   group is actually named for. */
 .mark {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-family: var(--sans);
-  font-weight: 600;
-  font-size: 16.5px;
-  letter-spacing: -0.012em;
-  line-height: 1.2;
+  gap: 14px;
   color: var(--ink);
+  text-decoration: none;
 }
+.mark:hover { text-decoration: none; }
 
-/* The glyph is a mask, not an image, so one file follows the theme
-   instead of shipping a light copy and a dark copy that drift apart. */
+/* The glyph is a mask over currentColor, so one file follows the theme. */
 .mark-glyph {
-  width: 29px;
-  height: 29px;
+  width: 30px;
+  height: 30px;
   flex: none;
   background: currentColor;
   -webkit-mask: url(/assets/img/mark.svg) center / contain no-repeat;
   mask: url(/assets/img/mark.svg) center / contain no-repeat;
 }
-.mark:hover { text-decoration: none; }
 
-.mark-text { display: block; }
-
-.mark small {
-  display: block;
+.mark-text {
   font-family: var(--mono);
-  font-weight: 400;
-  font-size: 10.5px;
-  letter-spacing: 0.09em;
+  font-size: 11.5px;
+  line-height: 1.45;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--ink-3);
-  margin-top: 3px;
+  color: var(--ink-2);
 }
 
 .nav {
   margin-left: auto;
   display: flex;
-  /* Five items at 12px mono need about 330px. It wrapped at six and could
-     still wrap on a narrow phone, so the wrap stays. */
   flex-wrap: wrap;
-  gap: 24px;
+  gap: 8px 26px;
   font-family: var(--mono);
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: lowercase;
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.nav a { color: var(--ink-2); }
-.nav a:hover { color: var(--ink); text-decoration: none; }
-.nav a.on { color: var(--ink); border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
+.nav a { color: var(--ink-2); text-decoration: none; }
+.nav a:hover { color: var(--ink); }
+.nav a.on { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; }
 
-/* Two states, not three: a sun and a crescent, masked over currentColor
-   like the wordmark glyph so the control is drawn in the theme it sets.
-   The glyph keys off the root attribute rather than the button's own, so
-   the inline head script has already chosen it before first paint. */
+/* The theme control: a sun or a crescent, masked over the text colour like
+   the mark, showing the theme in use. The button is a 32px target around an
+   18px glyph; the negative margin keeps the glyph on the frame's right edge. */
 .theme {
-  width: 19px;
-  height: 19px;
-  padding: 0;
-  border: 0;
+  width: 32px;
+  height: 32px;
   flex: none;
-  align-self: center;
+  padding: 0;
+  margin-right: -7px;
+  border: 0;
   cursor: pointer;
-  background: var(--ink-3);
-  -webkit-mask: url(/assets/img/theme-light.svg) center / contain no-repeat;
-  mask: url(/assets/img/theme-light.svg) center / contain no-repeat;
-  transition: background-color .15s ease;
+  background: var(--ink-2);
+  -webkit-mask: url(/assets/img/theme-light.svg) center / 18px 18px no-repeat;
+  mask: url(/assets/img/theme-light.svg) center / 18px 18px no-repeat;
 }
 .theme:hover { background: var(--ink); }
-
 :root[data-theme="dark"] .theme {
   -webkit-mask-image: url(/assets/img/theme-dark.svg);
   mask-image: url(/assets/img/theme-dark.svg);
 }
 
-/* The paper figures run from 2.5:1 to 4.4:1. Fitted to a phone's width the
-   widest becomes a 67px smudge, so below 600px they keep a legible width and
-   the frame scrolls instead. The clipped edge inside the border is the cue. */
-/* The mark and the nav stop sharing a row at about 650px, which adds a row
-   and the shell's 28px gap to the masthead. */
-@media (max-width: 719px) {
-  :root { --masthead: 113px; }
-}
-
-@media (max-width: 600px) {
-  :root { --masthead: 130px; }
-
-  .plate.full { overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 14px; }
-  .plate.full img { min-width: 660px; }
-
-  .masthead .shell { padding-bottom: 14px; }
-  /* order pulls the nav below, so the toggle rides on the mark's line instead
-     of taking a row of its own under a wrapped nav. */
-  /* Five items take about 270px of text. They have to share one row on a
-     phone, or the masthead grows a row and --masthead above is wrong, so the
-     gap is a minimum and the row is spread across the width instead. */
-  .nav { order: 1; margin-left: 0; width: 100%; gap: 12px 10px; margin-top: 14px; justify-content: space-between; }
-  .theme { margin-left: auto; }
-}
-
-/* Below about 375px the row only fits with tighter tracking. */
-@media (max-width: 374px) {
-  .nav { letter-spacing: 0.02em; }
-}
-
-/* ---------- hero ---------- */
-
-.hero { padding: 72px 0 0; }
-
-.hero-name {
-  font-family: var(--sans);
-  font-weight: 600;
-  font-size: clamp(29px, 4.9vw, 52px);
-  line-height: 1.04;
-  letter-spacing: -0.026em;
-  text-wrap: balance;
-  margin: 0;
-  max-width: 17ch;
-}
-
-.hero-name .q { color: var(--ink-2); }
-
-.hero-lead {
-  font-family: var(--serif);
-  font-weight: 300;
-  font-size: clamp(19px, 2.3vw, 25px);
-  line-height: 1.42;
-  color: var(--ink);
-  max-width: 46ch;
-  text-wrap: pretty;
-  margin: 28px 0 0;
-}
-
-.hero-figure { margin-top: 56px; }
-
-/* ---------- annotation gutter ---------- */
-
-.band {
-  padding: 64px 0;
-  border-top: 1px solid var(--rule);
-}
-
-
-.band .shell {
-  display: grid;
-  gap: var(--gap);
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 900px) {
-  .band .shell {
-    grid-template-columns: var(--gutter) minmax(0, 1fr);
+/* On a phone the mark and the theme control share the first row and the
+   navigation takes the full width of the second. */
+@media (max-width: 640px) {
+  .masthead .shell { padding-top: 20px; padding-bottom: 8px; gap: 14px 16px; }
+  .mark-text { display: none; }
+  .theme { order: 1; margin-left: auto; }
+  .nav {
+    order: 2;
+    width: 100%;
+    margin-left: 0;
+    justify-content: space-between;
+    gap: 8px 12px;
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
   }
 }
 
-.margin {
-  font-family: var(--mono);
-  font-size: 11.5px;
-  line-height: 1.7;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--ink-3);
+/* The five navigation items still fit one row on the narrowest phones. */
+@media (max-width: 360px) {
+  :root { --edge: 20px; }
+  .nav { font-size: 10.5px; letter-spacing: 0; gap: 8px; }
 }
 
-.margin b {
-  display: block;
-  color: var(--ink);
-  font-weight: 500;
+/* ---------- home ---------- */
+
+.hero { padding: 96px 0 56px; }
+
+@media (max-width: 640px) {
+  .hero { padding: 64px 0 36px; }
+  .hero-place { text-wrap: balance; }
+  .hero-place br { display: none; }
 }
+
+.hero .shell { text-align: center; max-width: 1120px; }
+
+.hero-place {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0;
+}
+
+.hero-lead {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(23px, 1rem + 1.6vw, 38px);
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+  margin: 26px auto;
+  max-width: 30em;
+}
+
+/* The photograph under the home statement spans the header's width. */
+.horizon {
+  max-width: var(--frame);
+  margin: 0 auto;
+  padding: 0 var(--edge);
+}
+.horizon img { width: 100%; height: auto; }
+:root[data-theme="dark"] .horizon img { filter: brightness(.86); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .horizon img { filter: brightness(.86); }
+}
+.horizon .caption a { color: inherit; }
+
+.areas .area-item { padding: 10px 0; }
+.areas .area-item p { margin: 0; color: var(--ink-2); }
+.areas .h3 a, .area-title a { text-decoration: none; }
+.areas .h3 a:hover, .area-title a:hover { text-decoration: underline; text-decoration-thickness: 1px; }
+
+/* ---------- page head ---------- */
+
+.pagehead { padding: 72px 0 8px; }
+
+.pagehead h1 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(30px, 1.2rem + 1.8vw, 42px);
+  line-height: 1.15;
+  margin: 0;
+}
+
+.pagehead .standfirst p { margin: 0 0 14px; }
+.pagehead .standfirst p:last-child { margin-bottom: 0; }
+
+.pagehead .standfirst {
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin: 16px 0 0;
+  max-width: 40em;
+  text-wrap: pretty;
+}
+
+/* ---------- sections ---------- */
+
+.band { padding: 44px 0; }
+.pagehead + .band { padding-top: 40px; }
+
+/* A section's label sits above its content, in the utility face. */
+.margin {
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.6;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 18px;
+}
+
+.margin b { color: var(--ink); font-weight: 500; }
+.margin b + br { display: none; }
 
 .margin em {
   display: block;
   font-style: normal;
   text-transform: none;
   letter-spacing: 0.01em;
-  color: var(--ink-3);
-  margin-top: 10px;
-  line-height: 1.65;
+  margin-top: 4px;
 }
 
 .column { min-width: 0; }
 
-/* ---------- prose ---------- */
-
-.prose {
-  font-family: var(--serif);
-  font-size: 18px;
-  line-height: 1.68;
-  color: var(--ink);
-  max-width: 66ch;
-}
-
 .prose p { margin: 0 0 18px; }
 .prose p:last-child { margin-bottom: 0; }
-.prose strong { font-weight: 600; }
-.prose a { border-bottom: 1px solid var(--rule); }
 
 .h2 {
-  font-family: var(--sans);
-  font-weight: 600;
-  font-size: clamp(21px, 2.7vw, 29px);
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(25px, 1rem + 1vw, 31px);
   line-height: 1.2;
-  letter-spacing: -0.018em;
   text-wrap: balance;
-  margin: 0 0 20px;
-  max-width: 26ch;
+  margin: 0 0 16px;
 }
 
 .h3 {
-  font-family: var(--sans);
-  font-weight: 600;
-  font-size: 16.5px;
-  line-height: 1.35;
-  letter-spacing: -0.008em;
-  text-wrap: balance;
-  margin: 0 0 7px;
-  color: var(--ink);
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.3;
+  margin: 0 0 4px;
 }
 
-/* ---------- entry list (research lines on the home page, openings on
-   join, the index on 404) ---------- */
+.more {
+  margin: 26px 0 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.more a { color: var(--ink-2); }
+.more a:hover { color: var(--ink); }
 
-.entries { border-top: 1px solid var(--rule-2); }
+/* ---------- entries: research lines on home, ways in on join ---------- */
 
 .entry {
   display: grid;
-  gap: 6px 28px;
-  padding: 22px 0;
-  border-bottom: 1px solid var(--rule-2);
+  gap: 4px 28px;
+  padding: 16px 0;
   grid-template-columns: 1fr;
 }
 
 @media (min-width: 720px) {
-  .entry { grid-template-columns: 150px minmax(0, 1fr); }
+  .entry { grid-template-columns: var(--rail) minmax(0, 1fr); }
 }
 
 .entry-key {
   font-family: var(--mono);
-  font-size: 11.5px;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  padding-top: 4px;
-}
-
-.entry-body p {
-  margin: 0;
-  font-family: var(--serif);
-  font-size: 17px;
-  line-height: 1.62;
-  color: var(--ink-2);
-  max-width: 62ch;
-}
-
-.entry-body p a { color: var(--cool); }
-
-/* ---------- publications ---------- */
-
-.pub {
-  padding: 20px 0;
-  border-bottom: 1px solid var(--rule-2);
-  display: grid;
-  gap: 4px 28px;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 720px) {
-  .pub { grid-template-columns: 78px minmax(0, 1fr); }
-}
-
-.pub-year {
-  font-family: var(--mono);
   font-size: 12px;
-  color: var(--ink-3);
-  padding-top: 3px;
-}
-
-.pub-title {
-  font-family: var(--sans);
-  font-weight: 500;
-  font-size: 16.5px;
-  line-height: 1.4;
-  color: var(--ink);
-  margin: 0 0 4px;
-  letter-spacing: -0.008em;
-}
-
-.pub-title a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--rule); }
-.pub-title a:hover { border-bottom-color: var(--ink); }
-
-/* One citation shape everywhere: title, then every author in published
-   order, then venue. Authors sit above the venue because the author line
-   is the longest and wraps; keeping it out of the venue line means the
-   venue never breaks mid-name. Group members are links, nothing is bold:
-   with seven members on a paper, bolding half an author list is louder
-   than the paper. */
-.pub-authors {
-  font-family: var(--sans);
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: var(--ink-2);
-  margin: 0 0 3px;
-  max-width: 74ch;
-}
-
-.pub-authors a {
-  color: var(--ink);
-  border-bottom: 1px solid var(--rule-2);
-}
-.pub-authors a:hover { border-bottom-color: var(--ink-3); }
-
-.pub-meta {
-  font-family: var(--sans);
-  font-size: 14px;
-  color: var(--ink-2);
-  margin: 0;
-}
-
-.pub-meta .venue { font-style: italic; }
-
-.tag {
-  display: inline-block;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--ink-3);
-  border: 1px solid var(--rule);
-  padding: 1px 6px;
-  margin-left: 8px;
-  vertical-align: 1.5px;
+  padding-top: 5px;
 }
 
+.entry-body p { margin: 0; color: var(--ink-2); }
+.entry-body .h3 a { text-decoration: none; }
+.entry-body .h3 a:hover { text-decoration: underline; }
 
 /* ---------- news ---------- */
 
-/* Same rail as a citation: the date where the year sits, and a kind label
-   under it in the shape of .tag. The label is the whole of the marking; no
-   emoji, no colour per kind, because the sentence says what happened. */
-.news { border-top: 1px solid var(--rule-2); }
-
 .news-item {
-  padding: 18px 0;
-  border-bottom: 1px solid var(--rule-2);
   display: grid;
-  gap: 6px 28px;
+  gap: 2px 28px;
+  padding: 10px 0;
   grid-template-columns: 1fr;
 }
 
 @media (min-width: 720px) {
-  .news-item { grid-template-columns: 96px minmax(0, 1fr); }
+  .news-item { grid-template-columns: var(--rail) minmax(0, 1fr); }
 }
 
 .news-date {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--ink-3);
-  padding-top: 3px;
+  padding-top: 5px;
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
-  gap: 6px 10px;
+  gap: 0 10px;
 }
 
 @media (min-width: 720px) {
-  .news-date { flex-direction: column; align-items: flex-start; }
+  .news-date { flex-direction: column; }
 }
 
-.news-date .tag { margin-left: 0; }
+.news-date .tag { margin: 0; }
 
-.news-text {
-  margin: 0;
+.news-text { margin: 0; }
+
+/* ---------- publications ---------- */
+
+.pub {
+  display: grid;
+  gap: 2px 28px;
+  padding: 12px 0;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 720px) {
+  .pub { grid-template-columns: var(--rail) minmax(0, 1fr); }
+}
+
+.pub-year {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--ink-3);
+  padding-top: 5px;
+}
+
+.pub-title { margin: 0; line-height: 1.4; }
+.pub-title a { text-decoration-color: var(--rule); }
+.pub-title a:hover { text-decoration-color: currentColor; }
+
+.pub-authors,
+.pub-meta {
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin: 2px 0 0;
+}
+
+.pub-authors a { text-decoration-color: var(--rule); }
+.pub-meta .venue { font-style: italic; }
+
+/* A distinction, such as an oral. */
+.tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-left: 10px;
+  white-space: nowrap;
+}
+
+/* ---------- research ---------- */
+
+.line-key {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 10px;
+}
+
+.topics {
+  list-style: none;
+  margin: 22px 0 0;
+  padding: 0;
+}
+
+.topics li { padding: 8px 0; }
+.topics b { display: block; font-weight: 500; }
+.topics span { color: var(--ink-2); }
+
+.study {
+  margin-top: 44px;
+}
+
+.study-title {
   font-family: var(--serif);
-  font-size: 17px;
-  line-height: 1.6;
-  color: var(--ink);
-  max-width: 64ch;
+  font-weight: 500;
+  font-size: 21px;
+  line-height: 1.3;
+  margin: 18px 0 6px;
 }
 
-.news-text a { border-bottom: 1px solid var(--rule); }
-.news-text a:hover { text-decoration: none; border-bottom-color: var(--cool); }
+.study p { margin: 0 0 10px; }
+.study .pub-title { font-size: 16px; margin-top: 14px; }
+
+.subhead {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 48px 0 6px;
+}
+
+/* Research overview: one block per area, then projects. */
+.area-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(26px, 1rem + 1.2vw, 34px);
+  line-height: 1.2;
+  margin: 0 0 14px;
+}
+
+.area-text { margin: 0; }
+
+.keys {
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.8;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 18px 0 0;
+}
+
+.crumb {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0 0 18px;
+}
+.crumb a { color: var(--ink-3); text-decoration: none; }
+.crumb a:hover { color: var(--ink); }
+.crumb a::before { content: "\2190\00a0"; }
+
+.people-line { margin: 0; }
 
 /* ---------- people ---------- */
 
 .roster {
   display: grid;
-  gap: 30px 28px;
-  grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
+  gap: 40px 32px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
-/* a single person, so the card does not stretch across the column */
-.roster.solo { grid-template-columns: minmax(205px, 250px); }
+.roster.solo { grid-template-columns: minmax(200px, 340px); }
 
-/* Each person opens with a rule, so the column reads as a list whether
-   or not a photograph exists yet. People without one simply have no
-   image block; there is no placeholder box to look at. */
-/* Author names in a citation link to the person's card, so the card is an
-   anchor target and has to clear the sticky masthead. */
-.person {
-  border-top: 1px solid var(--rule);
-  padding-top: 14px;
-  scroll-margin-top: calc(var(--masthead) + 22px);
-}
+.person { scroll-margin-top: 24px; }
 
 .person .portrait {
   aspect-ratio: 1 / 1;
-  max-width: 128px;
+  max-width: 120px;
   background: var(--raised);
-  margin-bottom: 13px;
+  margin-bottom: 14px;
   overflow: hidden;
 }
 
 .person .portrait img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Reserved, not missing. A hairline says the slot is deliberate, and the figure
-   is drawn in the mark's own vocabulary: two hard-edged pieces held apart by an
-   equal gap. */
-.person .portrait.pending {
-  display: grid;
-  place-items: center;
-  box-shadow: inset 0 0 0 1px var(--rule);
-}
+.person .portrait.pending { display: grid; place-items: center; }
+.person .portrait.pending svg { width: 62%; height: auto; fill: var(--rule); }
 
-.person .portrait.pending svg {
-  width: 62%;
-  height: auto;
-  fill: var(--rule);
-}
-
-.person .name {
-  font-family: var(--sans);
-  font-weight: 600;
-  font-size: 16px;
-  letter-spacing: -0.01em;
-  margin: 0 0 2px;
-}
+.person .name { font-size: 19px; line-height: 1.3; margin: 0; }
 
 .person .role {
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--ink-3);
-  margin: 0 0 6px;
+  margin: 4px 0 8px;
 }
 
 .person .line {
-  font-family: var(--serif);
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 1.5;
   color: var(--ink-2);
   margin: 0;
@@ -601,76 +564,45 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 .person .links {
   font-family: var(--mono);
-  font-size: 11px;
-  margin-top: 8px;
+  font-size: 11.5px;
+  margin-top: 10px;
   display: flex;
-  gap: 12px;
+  gap: 4px 14px;
   flex-wrap: wrap;
 }
+.person .links a { color: var(--ink-2); }
+.person .links a:hover { color: var(--ink); }
 
 /* ---------- figures ---------- */
 
 .figure { margin: 0; }
 
-.frame {
-  border: 1px solid var(--rule);
-  background: var(--raised);
-  overflow: hidden;
-}
-
+.frame { background: var(--raised); overflow: hidden; }
 .frame img { width: 100%; height: auto; }
 
-/* Photographs are cropped in the file, not by the frame, so nobody is
-   ever cut off at the knees by a breakpoint. */
+/* Paper figures are drawn on white, so they keep a white plate in both themes. */
+.plate {
+  background: #ffffff;
+  padding: 20px;
+}
+.plate img { width: auto; max-width: 100%; max-height: 260px; margin: 0 auto; }
+
+/* Below 600px a wide figure keeps a legible width and the plate scrolls. */
+@media (max-width: 600px) {
+  .plate { overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 14px; }
+  .plate img { min-width: 640px; max-height: none; }
+}
 
 .caption {
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.05em;
+  font-size: 11.5px;
+  letter-spacing: 0.03em;
   color: var(--ink-3);
   margin-top: 10px;
   line-height: 1.6;
 }
 
-/* ---------- call strip ---------- */
-
-.strip {
-  border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--rule);
-  padding: 44px 0;
-}
-
-.strip .shell {
-  display: flex;
-  gap: 28px;
-  align-items: baseline;
-  flex-wrap: wrap;
-}
-
-.strip .line {
-  font-family: var(--serif);
-  font-size: clamp(20px, 2.6vw, 27px);
-  font-weight: 300;
-  line-height: 1.35;
-  margin: 0;
-  max-width: 40ch;
-  text-wrap: balance;
-}
-
-.strip .to { margin-left: auto; }
-
-.arrow {
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  color: var(--ink);
-  border-bottom: 1px solid var(--ink);
-  padding-bottom: 3px;
-  white-space: nowrap;
-}
-.arrow:hover { color: var(--cool); border-color: var(--cool); text-decoration: none; }
-
-/* ---------- contact block ---------- */
+/* ---------- contact ---------- */
 
 .contact {
   font-family: var(--mono);
@@ -679,238 +611,43 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   color: var(--ink-2);
 }
 .contact b { color: var(--ink); font-weight: 500; }
+.join-photo { margin-top: 40px; }
 
 /* ---------- footer ---------- */
 
-.footer {
-  border-top: 1px solid var(--rule);
-  padding: 40px 0 64px;
-  margin-top: 20px;
-}
+.footer { padding: 72px 0 40px; }
 
 .footer .shell {
-  display: grid;
-  gap: 24px;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 18px 32px;
   font-family: var(--mono);
   font-size: 11.5px;
-  line-height: 1.8;
+  line-height: 1.7;
   letter-spacing: 0.04em;
-  color: var(--ink-3);
-}
-
-@media (min-width: 720px) {
-  .footer .shell { grid-template-columns: 2fr 1fr 1fr; }
-}
-
-.footer b { display: block; color: var(--ink); font-weight: 500; margin-bottom: 6px; }
-.footer a { color: var(--ink-2); }
-.footer a:hover { color: var(--ink); }
-
-/* ---------- page header (inner pages) ---------- */
-
-.pagehead { padding: 68px 0 8px; }
-
-.pagehead .kicker {
-  font-family: var(--mono);
-  font-size: 11.5px;
-  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-3);
-  margin: 0 0 16px;
 }
 
-.pagehead h1 {
-  font-family: var(--sans);
-  font-weight: 600;
-  font-size: clamp(26px, 4vw, 42px);
-  line-height: 1.1;
-  letter-spacing: -0.024em;
-  text-wrap: balance;
-  margin: 0;
-  max-width: 22ch;
-}
+.footer p { margin: 0; }
+.footer .end { display: flex; gap: 22px; align-items: baseline; }
+.footer a { color: var(--ink-2); text-decoration: none; }
+.footer a:hover { color: var(--ink); }
 
-.pagehead .standfirst {
-  font-family: var(--serif);
-  font-weight: 300;
-  font-size: clamp(18px, 2.1vw, 22px);
-  line-height: 1.45;
-  color: var(--ink-2);
-  max-width: 54ch;
-  margin: 20px 0 0;
-  text-wrap: pretty;
-}
 
 /* ---------- utilities ---------- */
 
-.more { margin: 22px 0 0; }
-.pagehead + .band { padding-top: 56px; }
-
-/* Draft markers. Deliberately quiet: they are notes to the editor, not
-   warnings to the reader. Nothing published should carry one; if you can
-   see one on the live site, it is a bug in the review, not a feature. */
+/* Draft marker. Nothing published should carry one. */
 .todo {
   font-family: var(--mono);
   font-size: 10.5px;
-  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-3);
   border-bottom: 1px dashed var(--ink-3);
-  padding-bottom: 1px;
-  display: inline-block;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
-
-/* ---------- studies ---------- */
-
-/* A study sits inside the research line it belongs to, on the same page,
-   rather than on a page of its own. Four studies on four URLs could not be
-   compared without four page loads, and each one needed a masthead, a
-   pagehead and a footer to carry two hundred words. */
-
-/* Offset from --masthead rather than a number of its own, so the two cannot
-   drift. The 22px is breathing room above the heading. */
-.study {
-  scroll-margin-top: calc(var(--masthead) + 22px);
-  border-top: 1px solid var(--rule);
-  padding-top: 26px;
-  margin-top: 44px;
-}
-
-.study-key {
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  margin: 0 0 6px;
-}
-
-/* Between .h2 (a research line) and .h3 (a slot label). */
-.study-title {
-  font-family: var(--sans);
-  font-weight: 600;
-  font-size: clamp(18px, 2vw, 21px);
-  line-height: 1.28;
-  letter-spacing: -0.014em;
-  text-wrap: balance;
-  margin: 0 0 8px;
-  max-width: 34ch;
-  color: var(--ink);
-}
-
-.study-line {
-  font-family: var(--serif);
-  font-size: 16.5px;
-  line-height: 1.5;
-  color: var(--ink-2);
-  margin: 0 0 22px;
-  max-width: 52ch;
-}
-
-/* Contents list. On a page this long the reader needs to see the shape of
-   it before committing to the scroll. */
-.jump {
-  font-family: var(--mono);
-  font-size: 12px;
-  line-height: 1.9;
-  color: var(--ink-3);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  columns: 2;
-  column-gap: 28px;
-}
-
-@media (max-width: 560px) {
-  .jump { columns: 1; }
-}
-
-/* A study is indented under the research line it belongs to. Indentation
-   rather than a leading dash: a dash at the start of a list item reads as
-   sentence punctuation instead of hierarchy. */
-.jump .sub { padding-left: 20px; }
-
-.jump a { color: var(--ink-2); border-bottom: 1px solid var(--rule-2); }
-.jump a:hover { color: var(--ink); border-bottom-color: var(--ink-3); }
-
-/* Every study carries the same three slots: the question, what was found,
-   and the paper. The template is the group's method made structural. */
-.slot {
-  border-top: 1px solid var(--rule-2);
-  padding: 20px 0;
-  display: grid;
-  gap: 4px 28px;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 720px) {
-  .slot { grid-template-columns: 150px minmax(0, 1fr); }
-}
-
-.slot-key {
-  font-family: var(--mono);
-  font-size: 11.5px;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  padding-top: 4px;
-}
-
-.slot-body p {
-  margin: 0 0 12px;
-  font-family: var(--serif);
-  font-size: 17px;
-  line-height: 1.62;
-  color: var(--ink);
-  max-width: 64ch;
-}
-.slot-body p:last-child { margin-bottom: 0; }
-.slot-body strong { font-weight: 600; }
-
-/* A citation inside a study slot takes the same shape as one on the
-   publications page, so the reader learns the format once. These have to
-   restate font and size because `.slot-body p` outranks `.pub-title` on
-   specificity and would otherwise set the citation in reading serif. */
-.slot-body .pub-title {
-  font-family: var(--sans);
-  font-weight: 500;
-  font-size: 16.5px;
-  line-height: 1.4;
-  letter-spacing: -0.008em;
-  margin: 0 0 4px;
-  max-width: 74ch;
-}
-
-.slot-body .pub-authors {
-  font-family: var(--sans);
-  font-weight: 400;
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: var(--ink-2);
-  margin: 0 0 3px;
-  max-width: 74ch;
-}
-
-.slot-body .pub-meta {
-  font-family: var(--sans);
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--ink-2);
-  margin: 0;
-  max-width: 74ch;
-}
-
-.plate.full {
-  background: #ffffff;
-  border: 1px solid var(--rule);
-  padding: 22px;
-}
-.plate.full img { width: 100%; height: auto; }
-
