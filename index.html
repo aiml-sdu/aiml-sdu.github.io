@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>(function(){try{var t=localStorage.getItem("aiml-theme");if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}document.documentElement.setAttribute("data-theme",t)}catch(e){}})();</script>
 <title>Applied and Interpretable Machine Learning Research Group &middot; SDU</title>
-<meta name="description" content="A research group at the Centre for Industrial Software, University of Southern Denmark. We build machine learning systems with industry and study what is happening inside them.">
+<meta name="description" content="A research group at the Centre for Industrial Software, University of Southern Denmark. Interpretability and explainability of machine learning models, and search and forecasting with structured data.">
 <link rel="icon" href="/assets/img/favicon-v3.ico" data-favicon>
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/site.css">
 </head>
 <body>
@@ -19,13 +19,13 @@
 
 <header class="masthead">
   <div class="shell">
-    <a class="mark" href="/"><span class="mark-glyph" aria-hidden="true"></span><span class="mark-text">Applied and Interpretable<small>Machine Learning Research Group</small></span></a>
+    <a class="mark" href="/"><span class="mark-glyph" aria-hidden="true"></span><span class="mark-text">Applied and Interpretable<br>Machine Learning</span></a>
     <nav class="nav" aria-label="Primary">
-      <a href="/research/">research</a>
-      <a href="/publications/">publications</a>
-      <a href="/news/">news</a>
-      <a href="/people/">people</a>
-      <a href="/join/">join</a>
+      <a href="/research/">Research</a>
+      <a href="/publications/">Publications</a>
+      <a href="/news/">News</a>
+      <a href="/people/">People</a>
+      <a href="/join/">Join</a>
     </nav>
     <button class="theme" type="button" data-theme-toggle aria-label="Switch theme"></button>
   </div>
@@ -35,46 +35,19 @@
 
   <section class="hero">
     <div class="shell">
-      <h1 class="hero-name">Applied and Interpretable Machine Learning <span class="q">Research Group</span></h1>
-      <p class="hero-lead">We build machine learning systems with industry, and we study what is happening inside them.</p>
-    </div>
-
-    <div class="shell hero-figure">
-      <figure class="figure">
-        <div class="frame">
-          <img src="/assets/img/campus-hero.jpeg" alt="A University of Southern Denmark building in glass and concrete under an overcast sky, with a steel sculpture in front of it." width="2048" height="880">
-        </div>
-        <figcaption class="caption">The Centre for Industrial Software, University of Southern Denmark.</figcaption>
-      </figure>
+      <h1 class="hero-lead">We look inside <a href="/research/interpretability/">machine learning models</a> to see how they work, and test whether an explanation of them is true or only sounds right. We also work on <a href="/research/structured-data/">finding the right data</a> and forecasting from it.</h1>
+      <p class="hero-place">A research group at the Centre for Industrial Software <br>University of Southern Denmark, S&oslash;nderborg</p>
     </div>
   </section>
 
-  <section class="band">
-    <div class="shell">
-      <div class="margin">
-        <b>The group</b>
-        Centre for Industrial Software<br>
-        M&aelig;rsk Mc-Kinney M&oslash;ller Institute<br>
-        SDU &middot; S&oslash;nderborg
-        <em>At SDU since 2023.</em>
-      </div>
-      <div class="column">
-        <h2 class="h2">Someone is accountable for every deployed model, whether or not anyone can explain it.</h2>
-        <div class="prose">
-          <p>Machine learning has become ordinary infrastructure. It reads scans, drafts documents, routes applications, and sits inside products that people depend on without having chosen to. What has not become ordinary is the ability to say afterwards what a system did, and why anyone should have believed it.</p>
-          <p>The group works on both halves of that. <strong>Applied</strong> means the questions come from systems that are already in use, and that the answers have to hold up there. <strong>Interpretable</strong> means we hold ourselves to explaining the resulting systems, and to testing whether the explanation survives contact with the model.</p>
-          <p>The second half is the harder one, because most explanations of a model are stated in a form that cannot fail. A highlighted region, a labelled feature, a plausible story about a circuit: each is a claim about a computation, put in a shape that no observation could contradict. Much of our methodological work is about restating such claims so that an observation could.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <figure class="horizon">
+    <img src="/assets/img/alsion-alssund.jpeg" alt="Alsion, the university building in S&oslash;nderborg, seen across the water of Alssund, with a sailing boat in front." width="2048" height="715">
+    <figcaption class="caption">Alsion, S&oslash;nderborg, across Alssund. Photo: <a href="https://commons.wikimedia.org/wiki/File:Alsion_2023_%C3%98.jpg">Hjart</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, cropped.</figcaption>
+  </figure>
 
   <section class="band">
     <div class="shell">
-      <div class="margin">
-        <b>News</b>
-        Latest
-      </div>
+      <div class="margin"><b>News</b></div>
       <div class="column">
         <div class="news">
           <div class="news-item">
@@ -97,63 +70,26 @@
             <p class="news-text">A paper on signal processing of multimodal data accepted at the NeuroMM workshop at ACM Multimedia 2026.</p>
           </div>
         </div>
-        <p class="more"><a class="arrow" href="/news/">All news &rarr;</a></p>
+        <p class="more"><a href="/news/">All news &rarr;</a></p>
       </div>
     </div>
   </section>
 
   <section class="band">
     <div class="shell">
-      <div class="margin">
-        <b>Research</b>
-        Four lines
-        <em>The four lines in full on the research page.</em>
-      </div>
+      <div class="margin"><b>Research</b></div>
       <div class="column">
-        <div class="entries">
-
-          <div class="entry">
-            <div class="entry-key">Interpretability</div>
-            <div class="entry-body">
-              <h3 class="h3">Reading a trained model, and checking the reading</h3>
-              <p>Counterfactual explanation, mechanistic analysis, and identifiability: when a description of a model is evidence about it, and when it is only a description. <a href="/research/#identifiability">A model&rsquo;s report on its own reasoning &rarr;</a></p>
-            </div>
+        <div class="areas">
+          <div class="area-item">
+            <h2 class="h3"><a href="/research/interpretability/">Interpretability and explainability</a></h2>
+            <p>How models work inside, and how to tell whether an explanation of them is true.</p>
           </div>
-
-          <div class="entry">
-            <div class="entry-key">Representation learning</div>
-            <div class="entry-body">
-              <h3 class="h3">What training decides, and what the output uses</h3>
-              <p>How architecture, data, optimisation and post-training shape the structure a model ends up with, and whether a capability that can be decoded from a representation is one the model draws on. <a href="/research/#readout">Instruction tuning and moral framing &rarr;</a></p>
-            </div>
+          <div class="area-item">
+            <h2 class="h3"><a href="/research/structured-data/">Structured and scientific data</a></h2>
+            <p>Finding the right dataset, describing it honestly, and forecasting from it.</p>
           </div>
-
-          <div class="entry">
-            <div class="entry-key">Imaging &amp; biosignals</div>
-            <div class="entry-body">
-              <h3 class="h3">Clinical imaging and physiological signals</h3>
-              <p>Segmentation, and the benchmarking practices the field uses to judge itself, including how standard protocols behave on small organs and small datasets. <a href="/research/#imaging">Read the line &rarr;</a></p>
-            </div>
-          </div>
-
-          <div class="entry">
-            <div class="entry-key">Language &amp; software</div>
-            <div class="entry-body">
-              <h3 class="h3">Retrieval, evaluation, and the architecture around a model</h3>
-              <p>Dataset search and retrieval for models that must answer from a real corpus, and the design decisions that coding assistants make on a team&rsquo;s behalf without being asked. <a href="/research/#language">Read the line &rarr;</a></p>
-            </div>
-          </div>
-
         </div>
-        <p class="more"><a class="arrow" href="/research/">The four lines in full &rarr;</a></p>
       </div>
-    </div>
-  </section>
-
-  <section class="strip">
-    <div class="shell">
-      <p class="line">We take on students who want to know why something worked, and not only that it did.</p>
-      <span class="to"><a class="arrow" href="/join/">Supervision, and how to write to us &rarr;</a></span>
     </div>
   </section>
 
@@ -161,26 +97,8 @@
 
 <footer class="footer">
   <div class="shell">
-    <div>
-      <b>Applied and Interpretable Machine Learning Research Group</b>
-      Centre for Industrial Software<br>
-      M&aelig;rsk Mc-Kinney M&oslash;ller Institute<br>
-      University of Southern Denmark<br>
-      S&oslash;nderborg, Denmark
-    </div>
-    <div>
-      <b>Pages</b>
-      <a href="/research/">Research</a><br>
-      <a href="/publications/">Publications</a><br>
-      <a href="/news/">News</a><br>
-      <a href="/people/">People</a><br>
-      <a href="/join/">Join</a>
-    </div>
-    <div>
-      <b>Elsewhere</b>
-      <a href="https://www.sdu.dk/en/forskning/cis">SDU CIS</a><br>
-      <a href="https://github.com/aiml-sdu">GitHub</a>
-    </div>
+    <p>Applied and Interpretable Machine Learning<br>Centre for Industrial Software &middot; SDU S&oslash;nderborg</p>
+    <p class="end"><a href="https://www.sdu.dk/en/forskning/cis">SDU CIS</a><a href="https://github.com/aiml-sdu">GitHub</a></p>
   </div>
 </footer>
 

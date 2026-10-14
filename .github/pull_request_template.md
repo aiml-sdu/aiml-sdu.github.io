@@ -18,5 +18,6 @@ Only if the change touches these:
 - [ ] New publication earns its band, and is not a second paper on a topic already
       covered by a stronger one
 - [ ] Work not done at SDU is not presented as the group's
-- [ ] New study fills all three slots and its `id` is in the contents list
+- [ ] New paper in a research area is also on that area's page, and the count on `/research/` is updated
+- [ ] A photograph that is not ours carries its credit and licence in the caption
 -->
