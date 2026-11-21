@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>(function(){try{var t=localStorage.getItem("aiml-theme");if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}document.documentElement.setAttribute("data-theme",t)}catch(e){}})();</script>
 <title>Applied and Interpretable Machine Learning Research Group &middot; SDU</title>
-<meta name="description" content="A research group at the Centre for Industrial Software, University of Southern Denmark. Interpretability and explainability of machine learning models, and search and forecasting with structured data.">
+<meta name="description" content="A research group at the Centre for Industrial Software, University of Southern Denmark. Interpretability and safety of machine learning models, search and forecasting with structured data, and software engineering and machine learning.">
 <link rel="icon" href="/assets/img/favicon-v3.ico" data-favicon>
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,7 +35,7 @@
 
   <section class="hero">
     <div class="shell">
-      <h1 class="hero-lead">We look inside <a href="/research/interpretability/">machine learning models</a> to see how they work, and test whether an explanation of them is true or only sounds right. We also work on <a href="/research/structured-data/">finding the right data</a> and forecasting from it.</h1>
+      <h1 class="hero-lead">We look inside <a href="/research/interpretability/">machine learning models</a> to see how they work, and test whether an explanation of them, or a claim that they are safe, is true or only sounds right. We also work on <a href="/research/structured-data/">finding the right data</a> and forecasting from it, and on how AI is changing <a href="/research/software-engineering/">the way software is built</a>.</h1>
       <p class="hero-place">A research group at the Centre for Industrial Software <br>University of Southern Denmark, S&oslash;nderborg</p>
     </div>
   </section>
@@ -81,12 +81,16 @@
       <div class="column">
         <div class="areas">
           <div class="area-item">
-            <h2 class="h3"><a href="/research/interpretability/">Interpretability and explainability</a></h2>
-            <p>How models work inside, and how to tell whether an explanation of them is true.</p>
+            <h2 class="h3"><a href="/research/interpretability/">Interpretability and AI safety</a></h2>
+            <p>It is often unclear what a machine learning model&rsquo;s answer rests on. We study how trained models work inside, language models above all, and where in a model a behaviour comes from. We also follow what changes there when a model is fine-tuned, because a fine-tuned model can pass a safety test and still behave differently in ordinary use. Much of the work is about evidence. An explanation, a measurement of a model&rsquo;s insides, or a model&rsquo;s own account of its reasoning can sound right without being true, and so can a claim that a model is safe to deploy. We ask what each of these really shows, drawing on philosophy of science and on neuroscience, which met the same questions about brains.</p>
           </div>
           <div class="area-item">
             <h2 class="h3"><a href="/research/structured-data/">Structured and scientific data</a></h2>
-            <p>Finding the right dataset, describing it honestly, and forecasting from it.</p>
+            <p>Much of the data that science and public bodies rely on is not text or images but tables, knowledge graphs and measurements taken over time. Before such data can be used, someone has to find it, and its description has to match what is in it. We build search methods that find datasets by what they contain, and we test whether descriptions written by language models help people find data or mislead them. We also learn from the data once it is found, for example forecasting how plankton communities in the western Baltic change.</p>
+          </div>
+          <div class="area-item">
+            <h2 class="h3"><a href="/research/software-engineering/">Software engineering and machine learning</a></h2>
+            <p>Language models and coding agents now write and change real software, and machine learning has become a part of many software systems. We study both sides of this. On one side we ask what language models know about software architecture, and how coding agents shape the structure of the systems they help build. On the other we design software with machine learning inside it, from pipelines that tune and evaluate models to architectures for search and retrieval.</p>
           </div>
         </div>
       </div>

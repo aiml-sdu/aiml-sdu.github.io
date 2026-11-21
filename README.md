@@ -10,7 +10,7 @@ Plain HTML and CSS. No framework and no build step. To change a page, edit its H
 
 | What | File |
 | --- | --- |
-| Home statement, photo, latest news, the two research areas | `index.html` |
+| Home statement, photo, latest news, the three research areas | `index.html` |
 | Research overview: areas and projects | `research/index.html` |
 | One research area: description, themes, people, papers | `research/<area>/index.html` |
 | Publication list | `publications/index.html` |
@@ -81,7 +81,7 @@ Citation rules:
 - `.tag` marks a distinction only, such as `oral`.
 - No citation counts or other metrics.
 
-If the paper belongs to a research area, also add it to the Papers list on that area's page (`research/interpretability/` or `research/structured-data/`) and update the paper count on `research/index.html`. The copies are not checked against each other, so when a paper's status changes, edit all of them.
+If the paper belongs to a research area, also add it to the Papers list on that area's page (`research/interpretability/`, `research/structured-data/` or `research/software-engineering/`) and update the paper count on `research/index.html`. The copies are not checked against each other, so when a paper's status changes, edit all of them.
 
 ### A research area or project
 
