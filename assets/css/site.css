@@ -428,6 +428,7 @@ a:hover { text-decoration-style: solid; text-decoration-color: currentColor; }
 
 .pub-authors a { text-decoration-color: var(--rule); }
 .pub-meta .venue { font-style: italic; }
+.pub-meta a { text-decoration-color: var(--rule); }
 
 /* A distinction, such as an oral. */
 .tag {
