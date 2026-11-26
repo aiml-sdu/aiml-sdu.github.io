@@ -189,16 +189,17 @@ a:hover { text-decoration-style: solid; text-decoration-color: currentColor; }
     width: 100%;
     margin-left: 0;
     justify-content: space-between;
-    gap: 8px 12px;
-    font-size: 11.5px;
-    letter-spacing: 0.02em;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0;
   }
 }
 
-/* The five navigation items still fit one row on the narrowest phones. */
-@media (max-width: 360px) {
+/* The six navigation items fit one row from 375px; below that the type
+   shrinks so they still fit one row down to 320px. */
+@media (max-width: 374px) {
   :root { --edge: 20px; }
-  .nav { font-size: 10.5px; letter-spacing: 0; gap: 8px; }
+  .nav { font-size: 10px; gap: 5px; }
 }
 
 /* ---------- home ---------- */

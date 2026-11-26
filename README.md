@@ -14,6 +14,7 @@ Plain HTML and CSS. No framework and no build step. To change a page, edit its H
 | Research overview: areas and projects | `research/index.html` |
 | One research area: description, themes, people, papers | `research/<area>/index.html` |
 | Publication list | `publications/index.html` |
+| Courses | `teaching/index.html` |
 | News | `news/index.html` (the latest four are repeated on `index.html`) |
 | People | `people/index.html` |
 | Positions and contact | `join/index.html` |
@@ -41,6 +42,8 @@ A person's line comes from them or from a public source. If there is neither, le
 
 ### A news item
 
+News carries two kinds of item only: a paper accepted or published at a venue, and an event. A preprint goes on the publications page but not in the news, and new members, grants and projects have their places on the people and research pages.
+
 Add it to `news/index.html` under the right year, newest first. Copy it to the top of the news list on `index.html` with the year after the month (`Oct 2026`) and remove the bottom item there, so the home page keeps four.
 
 ```html
@@ -50,7 +53,7 @@ Add it to `news/index.html` under the right year, newest first. Copy it to the t
 </div>
 ```
 
-The kind label is one word: `paper`, `talk`, `joined`, `visit`, `grant`, `project`, `event`. Link member names to their card (`/people/#surname`).
+The kind label is `paper` or `event`. Link member names to their card (`/people/#surname`).
 
 ### A publication
 
@@ -82,6 +85,10 @@ Citation rules:
 - No citation counts or other metrics.
 
 If the paper belongs to a research area, also add it to the Papers list on that area's page (`research/interpretability/`, `research/data/` or `research/software-engineering/`) and update the paper count on `research/index.html`. The copies are not checked against each other, so when a paper's status changes, edit all of them.
+
+### A course
+
+Copy an `<div class="entry">` block in `teaching/index.html`, newest first. The key is the years (`Since 2025`), the title links to the course's own site, and the text comes from the teacher or the course description.
 
 ### A research area or project
 
